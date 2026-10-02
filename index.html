@@ -2,11 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>CDNspect</title>
 
@@ -46,16 +42,21 @@
             --muted: #78909C;
 
             --border: rgba(255, 255, 255, 0.65);
-            --dark-border: rgba(157, 231, 250, 0.18);
 
             --mono: "DM Mono", monospace;
             --sans: "Manrope", sans-serif;
+        }
+
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: #9DE7FA transparent;
         }
 
         body {
             min-height: 100vh;
 
             font-family: var(--sans);
+
             color: var(--text);
 
             background:
@@ -86,7 +87,6 @@
             inset: 0;
 
             pointer-events: none;
-
             opacity: 0.3;
 
             background-image:
@@ -123,9 +123,8 @@
             background: var(--baby-blue);
             filter: blur(120px);
             opacity: 0.18;
-
+			
             pointer-events: none;
-
             z-index: -1;
         }
 
@@ -152,12 +151,9 @@
 
         .navbar {
             display: flex;
-
             align-items: center;
             justify-content: space-between;
-
             padding: 13px 16px;
-
             margin-bottom: 22px;
 
             background:
@@ -184,7 +180,6 @@
 
             display: grid;
             place-items: center;
-
             border-radius: 12px;
 
             background:
@@ -206,7 +201,6 @@
                 0 7px 20px
                 rgba(91, 200, 232, 0.16);
         }
-
 
         .brand-name {
             font-size: 13px;
@@ -233,7 +227,6 @@
             display: flex;
             align-items: center;
             gap: 8px;
-
             padding: 8px 12px;
 
             border-radius: 999px;
@@ -269,6 +262,7 @@
         }
 
         @keyframes pulse {
+
             0%,
             100% {
                 opacity: 1;
@@ -288,7 +282,6 @@
                 1.25fr 0.75fr;
 
             gap: 18px;
-
             margin-bottom: 18px;
         }
 
@@ -300,6 +293,7 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+
             border-radius: 28px;
 
             background:
@@ -330,7 +324,6 @@
             top: -90px;
 
             border-radius: 50%;
-
             border: 35px solid
                 rgba(157, 231, 250, 0.18);
         }
@@ -339,6 +332,7 @@
             width: fit-content;
             padding: 7px 10px;
             margin-bottom: 19px;
+
             border-radius: 7px;
 
             background:
@@ -356,12 +350,9 @@
             text-transform: uppercase;
         }
 
-
         .hero h1 {
             max-width: 650px;
-
             color: var(--dark);
-
             font-size: clamp(
                 42px,
                 6vw,
@@ -369,16 +360,11 @@
             );
 
             line-height: 0.96;
-
             letter-spacing: -4px;
-
             font-weight: 800;
-
             position: relative;
-
             z-index: 1;
         }
-
 
         .hero h1 span {
             color: var(--baby-blue-dark);
@@ -401,16 +387,12 @@
             margin-top: 25px;
         }
 
-
         .tag {
             padding: 8px 11px;
             border-radius: 8px;
-
             background: #ffffff;
 
-            border: 1px solid
-                #D9E8EE;
-
+            border: 1px solid #D9E8EE;
             color: #607985;
 
             font-family: var(--mono);
@@ -420,10 +402,9 @@
                 0 5px 14px
                 rgba(53, 91, 104, 0.06);
         }
-
+		
         .hero-status {
             position: relative;
-
             min-height: 390px;
 
             padding: 30px;
@@ -432,6 +413,7 @@
             border-radius: 28px;
 
             color: white;
+
             background:
                 linear-gradient(
                     150deg,
@@ -461,12 +443,16 @@
                 rgba(157, 231, 250, 0.1);
 
             filter: blur(4px);
+
+            pointer-events: none;
         }
 
         .status-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
+            position: relative;
+            z-index: 5;
         }
 
         .status-title {
@@ -476,7 +462,6 @@
 
         .status-label {
             margin-top: 3px;
-			
             color: #91AAB4;
 
             font-family: var(--mono);
@@ -502,92 +487,126 @@
                 rgba(157, 231, 250, 0.2);
 
             color: var(--baby-blue);
+
+            font-size: 18px;
         }
 
         .server-visual {
-            min-height: 210px;
-            display: grid;
-            place-items: center;
             position: relative;
-        }
+            width: 100%;
+            height: 225px;
 
-        .server-ring {
-            width: 150px;
-            height: 150px;
+            margin-top: 22px;
+            margin-bottom: 18px;
 
-            display: grid;
-            place-items: center;
-
-            border-radius: 50%;
-
-            border: 1px solid
-                rgba(157, 231, 250, 0.35);
-
-            box-shadow:
-                0 0 55px
-                rgba(157, 231, 250, 0.08);
-
-            position: relative;
-        }
-
-        .server-ring::before {
-            content: "";
-
-            position: absolute;
-
-            inset: 15px;
-
-            border-radius: 50%;
-            border: 1px dashed
-                rgba(157, 231, 250, 0.3);
-
-            animation:
-                rotate 12s linear infinite;
-        }
-
-        @keyframes rotate {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        .server-core {
-            width: 62px;
-            height: 62px;
-
-            display: grid;
-            place-items: center;
+            overflow: hidden;
 
             border-radius: 17px;
 
-            background:
-                linear-gradient(
-                    145deg,
-                    #f7fdff,
-                    #A8E8F7
-                );
+            background: #284650;
 
-            color: #17313A;
-
-            font-size: 12px;
-            font-weight: 800;
+            border: 1px solid
+                rgba(157, 231, 250, 0.4);
 
             box-shadow:
-                0 0 30px
-                rgba(157, 231, 250, 0.3);
+                0 0 40px
+                rgba(157, 231, 250, 0.15),
+
+                0 20px 45px
+                rgba(0, 0, 0, 0.3);
+
+            z-index: 2;
+        }
+
+        .edge-image {
+            position: absolute;
+            inset: 0;
+
+            width: 100%;
+            height: 100%;
+
+            display: block;
+
+            object-fit: cover;
+            object-position: center;
+
+            border: 0;
+            border-radius: 0;
+
+            filter:
+                saturate(0.95)
+                brightness(0.88);
+
+            transition:
+                transform 0.5s ease,
+                filter 0.5s ease;
+        }
+
+        .server-visual:hover .edge-image {
+            transform: scale(1.04);
+
+            filter:
+                saturate(1)
+                brightness(0.98);
+        }
+
+        .edge-image-overlay {
+            position: absolute;
+            inset: 0;
+
+            width: 100%;
+            height: 100%;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(157, 231, 250, 0.18),
+                    transparent 45%,
+                    rgba(13, 31, 38, 0.3)
+                );
+
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .landmark-label {
+            position: absolute;
+            left: 13px;
+            bottom: 12px;
+            z-index: 3;
+            padding: 7px 9px;
+
+            border-radius: 7px;
+
+            background:
+                rgba(20, 32, 39, 0.75);
+
+            border: 1px solid
+                rgba(157, 231, 250, 0.22);
+
+            color: #DDF8FF;
+
+            font-family: var(--mono);
+            font-size: 7px;
+
+            letter-spacing: 1px;
+            text-transform: uppercase;
+
+            backdrop-filter: blur(8px);
         }
 
         .status-bottom {
             position: relative;
-            z-index: 2;
+            z-index: 5;
             padding: 15px;
+
             border-radius: 13px;
 
             background:
-                rgba(255,255,255,0.055);
+                rgba(255, 255, 255, 0.055);
 
             border: 1px solid
-                rgba(255,255,255,0.08);
+                rgba(255, 255, 255, 0.08);
         }
 
         .ready {
@@ -634,18 +653,16 @@
 
         .information {
             display: grid;
-            grid-template-columns:
-                1.4fr 0.6fr;
+            grid-template-columns: 1fr;
             gap: 18px;
         }
 
         .card {
             background:
-                rgba(255,255,255,0.8);
+                rgba(255, 255, 255, 0.8);
 
             border: 1px solid
-                rgba(255,255,255,0.9);
-
+                rgba(255, 255, 255, 0.9);
             border-radius: 20px;
 
             box-shadow:
@@ -693,7 +710,6 @@
 
         .card-heading span {
             display: block;
-
             margin-top: 2px;
 
             color: var(--silver-dark);
@@ -709,13 +725,13 @@
             display: grid;
             grid-template-columns:
                 1fr 1fr;
+
             gap: 10px;
         }
 
         .data-box {
             padding: 15px;
             border-radius: 12px;
-
             background:
                 #F5FAFC;
 
@@ -739,7 +755,6 @@
             text-transform: uppercase;
         }
 
-
         .data-value {
             color: var(--text);
             font-size: 11px;
@@ -754,52 +769,6 @@
             font-size: 10px;
         }
 
-
-        .metrics {
-            padding: 25px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .metric {
-            padding: 14px 0;
-            border-bottom: 1px solid
-                #E3EDF1;
-        }
-
-        .metric:last-child {
-            border-bottom: 0;
-        }
-
-        .metric-label {
-            color: var(--silver-dark);
-
-            font-family: var(--mono);
-            font-size: 8px;
-
-            text-transform: uppercase;
-        }
-
-        .metric-value {
-            margin-top: 5px;
-
-            color: var(--dark);
-
-            font-size: 20px;
-            font-weight: 800;
-
-            letter-spacing: -0.5px;
-        }
-
-        .metric-value span {
-            color: var(--baby-blue-dark);
-
-            font-size: 10px;
-            font-family: var(--mono);
-            font-weight: 500;
-        }
-
         .checklist {
             display: grid;
             grid-template-columns:
@@ -810,13 +779,14 @@
         .check {
             position: relative;
             padding: 22px;
+
             overflow: hidden;
 
             background:
-                rgba(255,255,255,0.78);
+                rgba(255, 255, 255, 0.78);
 
             border: 1px solid
-                rgba(255,255,255,0.9);
+                rgba(255, 255, 255, 0.9);
 
             border-radius: 17px;
 
@@ -830,7 +800,8 @@
         }
 
         .check:hover {
-            transform: translateY(-4px);
+            transform:
+                translateY(-4px);
 
             box-shadow:
                 0 18px 40px
@@ -843,9 +814,7 @@
 
             display: grid;
             place-items: center;
-
             margin-bottom: 15px;
-
             border-radius: 9px;
 
             background:
@@ -872,7 +841,6 @@
 
         .check-code {
             display: inline-block;
-
             margin-top: 13px;
             padding: 6px 8px;
 
@@ -891,7 +859,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-
             margin-top: 30px;
             padding: 17px 2px 0;
 
@@ -917,15 +884,11 @@
             }
 
             .hero-status {
-                min-height: 300px;
+                min-height: 390px;
             }
 
             .server-visual {
-                min-height: 150px;
-            }
-
-            .information {
-                grid-template-columns: 1fr;
+                height: 250px;
             }
 
             .checklist {
@@ -939,6 +902,7 @@
             .page {
                 width:
                     calc(100% - 22px);
+
                 padding-top: 14px;
             }
 
@@ -962,6 +926,8 @@
             }
 
             .hero-status {
+                min-height: 385px;
+                padding: 22px;
                 border-radius: 22px;
             }
 
@@ -972,6 +938,19 @@
 
             .hero-description {
                 font-size: 12px;
+            }
+
+            .server-visual {
+                height: 210px;
+                margin-top: 20px;
+            }
+
+            .edge-image {
+                width: 100%;
+                height: 100%;
+
+                object-fit: cover;
+                object-position: center;
             }
 
             .data-grid {
@@ -988,17 +967,13 @@
 
             .section-header {
                 align-items: flex-start;
-
                 flex-direction: column;
-
                 gap: 5px;
             }
 
             footer {
                 flex-direction: column;
-
                 align-items: flex-start;
-
                 gap: 8px;
             }
         }
@@ -1006,12 +981,10 @@
     </style>
 </head>
 
-
 <body>
 
     <div class="glow one"></div>
     <div class="glow two"></div>
-
 
     <main class="page">
 
@@ -1037,7 +1010,6 @@
 
             </div>
 
-
             <div class="live">
 
                 <span class="live-dot"></span>
@@ -1050,26 +1022,24 @@
 
         <section class="hero">
 
-
             <div class="hero-main">
 
                 <div class="eyebrow">
-                    NETWORK / EDGE / DELIVERY
+                    NETWORK ~ EDGE ~ DELIVERY
                 </div>
-
 
                 <h1>
                     Hello,
                     <span>CDN.</span>
                 </h1>
 
+
                 <p class="hero-description">
-
-                    A lightweight static deployment created
-                    for observing CDN behavior, edge delivery,
-                    caching, and HTTP response headers.
-
+                    A test page deployed to observe Content Delivery Network
+                    behaviour and understand how static content can be delivered
+                    through distributed edge locations.
                 </p>
+
 
                 <div class="hero-tags">
 
@@ -1109,21 +1079,16 @@
 
                     </div>
 
-                    <div class="status-icon">
-                        ◎
-                    </div>
-
                 </div>
 
                 <div class="server-visual">
 
-                    <div class="server-ring">
-
-                        <div class="server-core">
-                            CDN
-                        </div>
-
-                    </div>
+                    <img
+                        class="edge-image"
+                        src="https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=1200&q=90"
+                        alt="City landmark and global location"
+                        loading="eager"
+                    >
 
                 </div>
 
@@ -1131,12 +1096,8 @@
 
                     <div class="ready">
 
-                        <strong>
-                            READY
-                        </strong>
-
                         <span>
-                            EDGE CONNECTION
+                            CONNECTION: READY
                         </span>
 
                     </div>
@@ -1158,6 +1119,7 @@
             </p>
 
         </div>
+
 
         <section class="information">
 
@@ -1183,8 +1145,8 @@
 
                 </div>
 
-                <div class="data-grid">
 
+                <div class="data-grid">
 
                     <div class="data-box">
 
@@ -1196,10 +1158,11 @@
                             class="data-value"
                             id="studentName"
                         >
-                            Your Name Here
+                            Ace Pugal
                         </div>
 
                     </div>
+
 
                     <div class="data-box">
 
@@ -1211,10 +1174,11 @@
                             class="data-value"
                             id="studentId"
                         >
-                            Your ID Here
+                            2401478
                         </div>
 
                     </div>
+
 
                     <div class="data-box">
 
@@ -1231,6 +1195,7 @@
 
                     </div>
 
+
                     <div class="data-box">
 
                         <div class="data-label">
@@ -1246,6 +1211,7 @@
 
                     </div>
 
+
                     <div class="data-box full">
 
                         <div class="data-label">
@@ -1259,68 +1225,6 @@
                             Loading...
                         </div>
 
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="card metrics">
-
-                <div class="card-heading">
-
-                    <div class="card-icon">
-                        ◌
-                    </div>
-
-                    <div>
-
-                        <h3>
-                            Node Metrics
-                        </h3>
-
-                        <span>
-                            Current session
-                        </span>
-
-                    </div>
-
-                </div>
-
-                <div class="metric">
-
-                    <div class="metric-label">
-                        Status
-                    </div>
-
-                    <div class="metric-value">
-                        Online
-                        <span>●</span>
-                    </div>
-
-                </div>
-
-                <div class="metric">
-
-                    <div class="metric-label">
-                        Delivery
-                    </div>
-
-                    <div class="metric-value">
-                        Active
-                    </div>
-
-                </div>
-
-                <div class="metric">
-
-                    <div class="metric-label">
-                        Protocol
-                    </div>
-
-                    <div class="metric-value">
-                        HTTP
-                        <span>WEB</span>
                     </div>
 
                 </div>
@@ -1415,11 +1319,13 @@
             </div>
 
             <div>
+
                 <strong>
                     STATIC DEPLOYMENT
                 </strong>
 
                 · NETWORK OBSERVATION
+
             </div>
 
         </footer>
@@ -1434,24 +1340,60 @@
 
         document.getElementById(
             "studentName"
-        ).textContent = STUDENT_NAME;
+        ).textContent =
+            STUDENT_NAME;
 
         document.getElementById(
             "studentId"
-        ).textContent = STUDENT_ID;
+        ).textContent =
+            STUDENT_ID;
 
         const deploymentTime =
-            new Date().toISOString();
+            new Date();
 
         document.getElementById(
             "deploymentTime"
         ).textContent =
-            deploymentTime;
+            deploymentTime.toISOString();
+
+        function detectBrowser() {
+
+            const userAgent =
+                navigator.userAgent;
+
+            if (
+                userAgent.includes("Edg/")
+            ) {
+                return "Microsoft Edge";
+            }
+
+            if (
+                userAgent.includes("Chrome/")
+            ) {
+                return "Google Chrome";
+            }
+
+            if (
+                userAgent.includes("Firefox/")
+            ) {
+                return "Mozilla Firefox";
+            }
+
+            if (
+                userAgent.includes("Safari/")
+                &&
+                !userAgent.includes("Chrome/")
+            ) {
+                return "Safari";
+            }
+
+            return "Browser detected";
+        }
 
         document.getElementById(
             "browserInfo"
         ).textContent =
-            navigator.userAgent;
+            detectBrowser();
 
         function updateViewport() {
 
@@ -1459,7 +1401,6 @@
                 "viewportInfo"
             ).textContent =
                 `${window.innerWidth} × ${window.innerHeight} px`;
-
         }
 
         updateViewport();
