@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>CDNspect</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --baby-blue: #9DE7FA;
+            --baby-blue-dark: #5BC8E8;
+            --baby-blue-soft: #DDF8FF;
+
+            --silver: #DCE6EB;
+            --silver-light: #F7FBFD;
+            --silver-dark: #8B9CA5;
+
+            --background: #EAF2F6;
+            --white: #FFFFFF;
+
+            --dark: #142027;
+            --dark-soft: #1D2C34;
+            --dark-card: #21323B;
+
+            --text: #23343D;
+            --muted: #78909C;
+
+            --border: rgba(255, 255, 255, 0.65);
+            --dark-border: rgba(157, 231, 250, 0.18);
+
+            --mono: "DM Mono", monospace;
+            --sans: "Manrope", sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+
+            font-family: var(--sans);
+            color: var(--text);
+
+            background:
+                radial-gradient(
+                    circle at 5% 10%,
+                    rgba(157, 231, 250, 0.75),
+                    transparent 28%
+                ),
+                radial-gradient(
+                    circle at 95% 80%,
+                    rgba(207, 220, 227, 0.8),
+                    transparent 30%
+                ),
+                linear-gradient(
+                    135deg,
+                    #f7fbfd 0%,
+                    #eaf3f7 48%,
+                    #dce8ee 100%
+                );
+
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+
+            position: fixed;
+            inset: 0;
+
+            pointer-events: none;
+
+            opacity: 0.3;
+
+            background-image:
+                linear-gradient(
+                    rgba(91, 200, 232, 0.08) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(91, 200, 232, 0.08) 1px,
+                    transparent 1px
+                );
+
+            background-size: 42px 42px;
+
+            mask-image:
+                linear-gradient(
+                    to bottom,
+                    black,
+                    transparent 85%
+                );
+
+            z-index: -1;
+        }
+
+        .glow {
+            position: fixed;
+
+            width: 320px;
+            height: 320px;
+
+            border-radius: 50%;
+
+            background: var(--baby-blue);
+            filter: blur(120px);
+            opacity: 0.18;
+
+            pointer-events: none;
+
+            z-index: -1;
+        }
+
+        .glow.one {
+            top: -160px;
+            left: -100px;
+        }
+
+        .glow.two {
+            right: -140px;
+            bottom: -100px;
+        }
+
+        .page {
+            width: min(
+                1180px,
+                calc(100% - 36px)
+            );
+
+            margin: auto;
+
+            padding: 28px 0 55px;
+        }
+
+        .navbar {
+            display: flex;
+
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 13px 16px;
+
+            margin-bottom: 22px;
+
+            background:
+                rgba(255, 255, 255, 0.72);
+
+            border: 1px solid var(--border);
+            border-radius: 18px;
+
+            backdrop-filter: blur(18px);
+            box-shadow:
+                0 12px 35px
+                rgba(55, 91, 105, 0.08);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+        }
+
+        .brand-logo {
+            width: 40px;
+            height: 40px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 12px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #ffffff,
+                    var(--baby-blue-soft)
+                );
+
+            border: 1px solid
+                rgba(91, 200, 232, 0.4);
+
+            color: #397B90;
+
+            font-size: 17px;
+            font-weight: 800;
+
+            box-shadow:
+                0 7px 20px
+                rgba(91, 200, 232, 0.16);
+        }
+
+
+        .brand-name {
+            font-size: 13px;
+            font-weight: 800;
+
+            letter-spacing: 0.5px;
+
+            color: var(--dark);
+        }
+
+        .brand-sub {
+            margin-top: 2px;
+
+            font-family: var(--mono);
+            font-size: 8px;
+
+            color: var(--silver-dark);
+
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .live {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            padding: 8px 12px;
+
+            border-radius: 999px;
+
+            background:
+                rgba(157, 231, 250, 0.2);
+
+            border: 1px solid
+                rgba(91, 200, 232, 0.3);
+
+            color: #32839D;
+
+            font-family: var(--mono);
+            font-size: 9px;
+
+            letter-spacing: 0.7px;
+        }
+
+        .live-dot {
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            background: var(--baby-blue-dark);
+
+            box-shadow:
+                0 0 10px
+                var(--baby-blue-dark);
+
+            animation:
+                pulse 1.8s infinite;
+        }
+
+        @keyframes pulse {
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.4;
+                transform: scale(0.7);
+            }
+        }
+
+        .hero {
+            display: grid;
+
+            grid-template-columns:
+                1.25fr 0.75fr;
+
+            gap: 18px;
+
+            margin-bottom: 18px;
+        }
+
+        .hero-main {
+            position: relative;
+            min-height: 390px;
+            overflow: hidden;
+            padding: 45px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-radius: 28px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ffffff 0%,
+                    #f1fbfe 52%,
+                    #dff6fc 100%
+                );
+
+            border: 1px solid
+                rgba(255, 255, 255, 0.95);
+
+            box-shadow:
+                0 25px 65px
+                rgba(60, 100, 115, 0.12);
+        }
+
+        .hero-main::before {
+            content: "";
+
+            position: absolute;
+
+            width: 240px;
+            height: 240px;
+
+            right: -80px;
+            top: -90px;
+
+            border-radius: 50%;
+
+            border: 35px solid
+                rgba(157, 231, 250, 0.18);
+        }
+
+        .eyebrow {
+            width: fit-content;
+            padding: 7px 10px;
+            margin-bottom: 19px;
+            border-radius: 7px;
+
+            background:
+                rgba(91, 200, 232, 0.11);
+
+            border: 1px solid
+                rgba(91, 200, 232, 0.2);
+
+            color: #4D9DB5;
+
+            font-family: var(--mono);
+            font-size: 8px;
+
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+
+        .hero h1 {
+            max-width: 650px;
+
+            color: var(--dark);
+
+            font-size: clamp(
+                42px,
+                6vw,
+                70px
+            );
+
+            line-height: 0.96;
+
+            letter-spacing: -4px;
+
+            font-weight: 800;
+
+            position: relative;
+
+            z-index: 1;
+        }
+
+
+        .hero h1 span {
+            color: var(--baby-blue-dark);
+        }
+
+        .hero-description {
+            max-width: 570px;
+            margin-top: 21px;
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.75;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 25px;
+        }
+
+
+        .tag {
+            padding: 8px 11px;
+            border-radius: 8px;
+
+            background: #ffffff;
+
+            border: 1px solid
+                #D9E8EE;
+
+            color: #607985;
+
+            font-family: var(--mono);
+            font-size: 8px;
+
+            box-shadow:
+                0 5px 14px
+                rgba(53, 91, 104, 0.06);
+        }
+
+        .hero-status {
+            position: relative;
+
+            min-height: 390px;
+
+            padding: 30px;
+            overflow: hidden;
+
+            border-radius: 28px;
+
+            color: white;
+            background:
+                linear-gradient(
+                    150deg,
+                    #29434E,
+                    #172B34
+                );
+
+            box-shadow:
+                0 25px 65px
+                rgba(26, 51, 61, 0.22);
+        }
+
+        .hero-status::after {
+            content: "";
+
+            position: absolute;
+
+            width: 220px;
+            height: 220px;
+
+            right: -80px;
+            bottom: -90px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(157, 231, 250, 0.1);
+
+            filter: blur(4px);
+        }
+
+        .status-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .status-title {
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .status-label {
+            margin-top: 3px;
+			
+            color: #91AAB4;
+
+            font-family: var(--mono);
+            font-size: 8px;
+
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .status-icon {
+            width: 35px;
+            height: 35px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 10px;
+
+            background:
+                rgba(157, 231, 250, 0.12);
+
+            border: 1px solid
+                rgba(157, 231, 250, 0.2);
+
+            color: var(--baby-blue);
+        }
+
+        .server-visual {
+            min-height: 210px;
+            display: grid;
+            place-items: center;
+            position: relative;
+        }
+
+        .server-ring {
+            width: 150px;
+            height: 150px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 50%;
+
+            border: 1px solid
+                rgba(157, 231, 250, 0.35);
+
+            box-shadow:
+                0 0 55px
+                rgba(157, 231, 250, 0.08);
+
+            position: relative;
+        }
+
+        .server-ring::before {
+            content: "";
+
+            position: absolute;
+
+            inset: 15px;
+
+            border-radius: 50%;
+            border: 1px dashed
+                rgba(157, 231, 250, 0.3);
+
+            animation:
+                rotate 12s linear infinite;
+        }
+
+        @keyframes rotate {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .server-core {
+            width: 62px;
+            height: 62px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 17px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #f7fdff,
+                    #A8E8F7
+                );
+
+            color: #17313A;
+
+            font-size: 12px;
+            font-weight: 800;
+
+            box-shadow:
+                0 0 30px
+                rgba(157, 231, 250, 0.3);
+        }
+
+        .status-bottom {
+            position: relative;
+            z-index: 2;
+            padding: 15px;
+            border-radius: 13px;
+
+            background:
+                rgba(255,255,255,0.055);
+
+            border: 1px solid
+                rgba(255,255,255,0.08);
+        }
+
+        .ready {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .ready strong {
+            color: var(--baby-blue);
+            font-size: 17px;
+        }
+
+        .ready span {
+            color: #8DA5AF;
+
+            font-family: var(--mono);
+            font-size: 8px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            margin: 32px 2px 13px;
+        }
+
+        .section-header h2 {
+            color: var(--dark);
+
+            font-size: 15px;
+            font-weight: 800;
+        }
+
+        .section-header p {
+            color: var(--silver-dark);
+
+            font-family: var(--mono);
+            font-size: 8px;
+
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .information {
+            display: grid;
+            grid-template-columns:
+                1.4fr 0.6fr;
+            gap: 18px;
+        }
+
+        .card {
+            background:
+                rgba(255,255,255,0.8);
+
+            border: 1px solid
+                rgba(255,255,255,0.9);
+
+            border-radius: 20px;
+
+            box-shadow:
+                0 14px 40px
+                rgba(62, 96, 109, 0.08);
+
+            backdrop-filter: blur(15px);
+        }
+
+        .deployment {
+            padding: 25px;
+        }
+
+        .card-heading {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            margin-bottom: 21px;
+        }
+
+        .card-icon {
+            width: 35px;
+            height: 35px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 10px;
+
+            background:
+                #E4F8FD;
+
+            border: 1px solid
+                #C5ECF5;
+
+            color: #4BA9C4;
+
+            font-size: 14px;
+        }
+
+        .card-heading h3 {
+            color: var(--dark);
+            font-size: 13px;
+        }
+
+        .card-heading span {
+            display: block;
+
+            margin-top: 2px;
+
+            color: var(--silver-dark);
+
+            font-family: var(--mono);
+            font-size: 8px;
+
+            text-transform: uppercase;
+            letter-spacing: 0.7px;
+        }
+
+        .data-grid {
+            display: grid;
+            grid-template-columns:
+                1fr 1fr;
+            gap: 10px;
+        }
+
+        .data-box {
+            padding: 15px;
+            border-radius: 12px;
+
+            background:
+                #F5FAFC;
+
+            border: 1px solid
+                #E3EDF1;
+        }
+
+        .data-box.full {
+            grid-column: 1 / -1;
+        }
+
+        .data-label {
+            margin-bottom: 7px;
+
+            color: var(--silver-dark);
+
+            font-family: var(--mono);
+            font-size: 8px;
+
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+        }
+
+
+        .data-value {
+            color: var(--text);
+            font-size: 11px;
+            line-height: 1.5;
+            word-break: break-word;
+        }
+
+        .data-value.blue {
+            color: #3895B1;
+
+            font-family: var(--mono);
+            font-size: 10px;
+        }
+
+
+        .metrics {
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .metric {
+            padding: 14px 0;
+            border-bottom: 1px solid
+                #E3EDF1;
+        }
+
+        .metric:last-child {
+            border-bottom: 0;
+        }
+
+        .metric-label {
+            color: var(--silver-dark);
+
+            font-family: var(--mono);
+            font-size: 8px;
+
+            text-transform: uppercase;
+        }
+
+        .metric-value {
+            margin-top: 5px;
+
+            color: var(--dark);
+
+            font-size: 20px;
+            font-weight: 800;
+
+            letter-spacing: -0.5px;
+        }
+
+        .metric-value span {
+            color: var(--baby-blue-dark);
+
+            font-size: 10px;
+            font-family: var(--mono);
+            font-weight: 500;
+        }
+
+        .checklist {
+            display: grid;
+            grid-template-columns:
+                repeat(3, 1fr);
+            gap: 13px;
+        }
+
+        .check {
+            position: relative;
+            padding: 22px;
+            overflow: hidden;
+
+            background:
+                rgba(255,255,255,0.78);
+
+            border: 1px solid
+                rgba(255,255,255,0.9);
+
+            border-radius: 17px;
+
+            box-shadow:
+                0 12px 30px
+                rgba(62, 96, 109, 0.07);
+
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+        .check:hover {
+            transform: translateY(-4px);
+
+            box-shadow:
+                0 18px 40px
+                rgba(62, 96, 109, 0.12);
+        }
+
+        .check-number {
+            width: 30px;
+            height: 30px;
+
+            display: grid;
+            place-items: center;
+
+            margin-bottom: 15px;
+
+            border-radius: 9px;
+
+            background:
+                #E3F8FD;
+
+            color: #4AA6BF;
+
+            font-family: var(--mono);
+            font-size: 9px;
+            font-weight: 500;
+        }
+
+        .check h4 {
+            color: var(--dark);
+            font-size: 11px;
+            margin-bottom: 7px;
+        }
+
+        .check p {
+            color: var(--muted);
+            font-size: 10px;
+            line-height: 1.65;
+        }
+
+        .check-code {
+            display: inline-block;
+
+            margin-top: 13px;
+            padding: 6px 8px;
+
+            border-radius: 6px;
+
+            background:
+                #EEF7FA;
+
+            color: #5790A1;
+
+            font-family: var(--mono);
+            font-size: 8px;
+        }
+
+        footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-top: 30px;
+            padding: 17px 2px 0;
+
+            border-top: 1px solid
+                rgba(107, 139, 150, 0.18);
+
+            color: #8A9BA3;
+
+            font-family: var(--mono);
+            font-size: 8px;
+
+            letter-spacing: 0.5px;
+        }
+
+        footer strong {
+            color: #557681;
+        }
+
+        @media (max-width: 900px) {
+
+            .hero {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-status {
+                min-height: 300px;
+            }
+
+            .server-visual {
+                min-height: 150px;
+            }
+
+            .information {
+                grid-template-columns: 1fr;
+            }
+
+            .checklist {
+                grid-template-columns:
+                    1fr 1fr;
+            }
+        }
+
+        @media (max-width: 620px) {
+
+            .page {
+                width:
+                    calc(100% - 22px);
+                padding-top: 14px;
+            }
+
+            .navbar {
+                padding: 10px 11px;
+            }
+
+            .brand-sub {
+                display: none;
+            }
+
+            .live {
+                padding: 7px 9px;
+                font-size: 7px;
+            }
+
+            .hero-main {
+                min-height: 400px;
+                padding: 30px 25px;
+                border-radius: 22px;
+            }
+
+            .hero-status {
+                border-radius: 22px;
+            }
+
+            .hero h1 {
+                font-size: 45px;
+                letter-spacing: -2.5px;
+            }
+
+            .hero-description {
+                font-size: 12px;
+            }
+
+            .data-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .data-box.full {
+                grid-column: auto;
+            }
+
+            .checklist {
+                grid-template-columns: 1fr;
+            }
+
+            .section-header {
+                align-items: flex-start;
+
+                flex-direction: column;
+
+                gap: 5px;
+            }
+
+            footer {
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 8px;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+    <div class="glow one"></div>
+    <div class="glow two"></div>
+
+
+    <main class="page">
+
+        <header class="navbar">
+
+            <div class="brand">
+
+                <div class="brand-logo">
+                    ◈
+                </div>
+
+                <div>
+
+                    <div class="brand-name">
+                        CDN NODE
+                    </div>
+
+                    <div class="brand-sub">
+                        Cloud Deployment Lab
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="live">
+
+                <span class="live-dot"></span>
+
+                SYSTEM ONLINE
+
+            </div>
+
+        </header>
+
+        <section class="hero">
+
+
+            <div class="hero-main">
+
+                <div class="eyebrow">
+                    NETWORK / EDGE / DELIVERY
+                </div>
+
+
+                <h1>
+                    Hello,
+                    <span>CDN.</span>
+                </h1>
+
+                <p class="hero-description">
+
+                    A lightweight static deployment created
+                    for observing CDN behavior, edge delivery,
+                    caching, and HTTP response headers.
+
+                </p>
+
+                <div class="hero-tags">
+
+                    <span class="tag">
+                        STATIC WEB
+                    </span>
+
+                    <span class="tag">
+                        EDGE DELIVERY
+                    </span>
+
+                    <span class="tag">
+                        CDN TEST
+                    </span>
+
+                    <span class="tag">
+                        HTTP / HTTPS
+                    </span>
+
+                </div>
+
+            </div>
+
+            <div class="hero-status">
+
+                <div class="status-header">
+
+                    <div>
+
+                        <div class="status-title">
+                            Edge Node
+                        </div>
+
+                        <div class="status-label">
+                            Delivery Status
+                        </div>
+
+                    </div>
+
+                    <div class="status-icon">
+                        ◎
+                    </div>
+
+                </div>
+
+                <div class="server-visual">
+
+                    <div class="server-ring">
+
+                        <div class="server-core">
+                            CDN
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="status-bottom">
+
+                    <div class="ready">
+
+                        <strong>
+                            READY
+                        </strong>
+
+                        <span>
+                            EDGE CONNECTION
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <div class="section-header">
+
+            <h2>
+                Deployment Information
+            </h2>
+
+            <p>
+                Runtime environment
+            </p>
+
+        </div>
+
+        <section class="information">
+
+            <div class="card deployment">
+
+                <div class="card-heading">
+
+                    <div class="card-icon">
+                        ↗
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Deployment Details
+                        </h3>
+
+                        <span>
+                            Live environment metadata
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <div class="data-grid">
+
+
+                    <div class="data-box">
+
+                        <div class="data-label">
+                            Student Name
+                        </div>
+
+                        <div
+                            class="data-value"
+                            id="studentName"
+                        >
+                            Your Name Here
+                        </div>
+
+                    </div>
+
+                    <div class="data-box">
+
+                        <div class="data-label">
+                            Student ID
+                        </div>
+
+                        <div
+                            class="data-value"
+                            id="studentId"
+                        >
+                            Your ID Here
+                        </div>
+
+                    </div>
+
+                    <div class="data-box">
+
+                        <div class="data-label">
+                            Deployment Time
+                        </div>
+
+                        <div
+                            class="data-value blue"
+                            id="deploymentTime"
+                        >
+                            Loading...
+                        </div>
+
+                    </div>
+
+                    <div class="data-box">
+
+                        <div class="data-label">
+                            Viewport
+                        </div>
+
+                        <div
+                            class="data-value blue"
+                            id="viewportInfo"
+                        >
+                            Loading...
+                        </div>
+
+                    </div>
+
+                    <div class="data-box full">
+
+                        <div class="data-label">
+                            Browser
+                        </div>
+
+                        <div
+                            class="data-value"
+                            id="browserInfo"
+                        >
+                            Loading...
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="card metrics">
+
+                <div class="card-heading">
+
+                    <div class="card-icon">
+                        ◌
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Node Metrics
+                        </h3>
+
+                        <span>
+                            Current session
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <div class="metric">
+
+                    <div class="metric-label">
+                        Status
+                    </div>
+
+                    <div class="metric-value">
+                        Online
+                        <span>●</span>
+                    </div>
+
+                </div>
+
+                <div class="metric">
+
+                    <div class="metric-label">
+                        Delivery
+                    </div>
+
+                    <div class="metric-value">
+                        Active
+                    </div>
+
+                </div>
+
+                <div class="metric">
+
+                    <div class="metric-label">
+                        Protocol
+                    </div>
+
+                    <div class="metric-value">
+                        HTTP
+                        <span>WEB</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <div class="section-header">
+
+            <h2>
+                CDN Verification
+            </h2>
+
+            <p>
+                Browser network inspection
+            </p>
+
+        </div>
+
+        <section class="checklist">
+
+            <article class="check">
+
+                <div class="check-number">
+                    01
+                </div>
+
+                <h4>
+                    Open Developer Tools
+                </h4>
+
+                <p>
+                    Press F12 and open the
+                    <strong>Network</strong> tab.
+                </p>
+
+                <span class="check-code">
+                    F12 → Network
+                </span>
+
+            </article>
+
+            <article class="check">
+
+                <div class="check-number">
+                    02
+                </div>
+
+                <h4>
+                    Refresh the Page
+                </h4>
+
+                <p>
+                    Reload this deployment and select
+                    the main HTML document.
+                </p>
+
+                <span class="check-code">
+                    Refresh → HTML
+                </span>
+
+            </article>
+
+            <article class="check">
+
+                <div class="check-number">
+                    03
+                </div>
+
+                <h4>
+                    Inspect Response Headers
+                </h4>
+
+                <p>
+                    Open the Headers panel and locate
+                    CDN-related response fields.
+                </p>
+
+                <span class="check-code">
+                    Headers → Response
+                </span>
+
+            </article>
+
+        </section>
+
+        <footer>
+
+            <div>
+                © Ace Pugal '26. All rights reserved.
+            </div>
+
+            <div>
+                <strong>
+                    STATIC DEPLOYMENT
+                </strong>
+
+                · NETWORK OBSERVATION
+            </div>
+
+        </footer>
+
+    </main>
+
+    <script>
+
+        const STUDENT_NAME = "Ace Pugal";
+
+        const STUDENT_ID = "2401478";
+
+        document.getElementById(
+            "studentName"
+        ).textContent = STUDENT_NAME;
+
+        document.getElementById(
+            "studentId"
+        ).textContent = STUDENT_ID;
+
+        const deploymentTime =
+            new Date().toISOString();
+
+        document.getElementById(
+            "deploymentTime"
+        ).textContent =
+            deploymentTime;
+
+        document.getElementById(
+            "browserInfo"
+        ).textContent =
+            navigator.userAgent;
+
+        function updateViewport() {
+
+            document.getElementById(
+                "viewportInfo"
+            ).textContent =
+                `${window.innerWidth} × ${window.innerHeight} px`;
+
+        }
+
+        updateViewport();
+
+        window.addEventListener(
+            "resize",
+            updateViewport
+        );
+
+    </script>
+
+</body>
+</html>
